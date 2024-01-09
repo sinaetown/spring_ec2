@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>JS Postlist</title>
+    <meta charset="UTF-8"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+    />
+    <style>
+        object {
+          width: 100vw;
+        }
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        async function callbackImp() {
+          try {
+            const response1 = await axios.get(
+              "http://localhost:8080/csr/json"
+              // "https://jsonplaceholder.typicode.com/posts/"
+            );
+            //   단건의 경우! : 위에 링크가  "https://jsonplaceholder.typicode.com/posts/1" 일때
+
+            //   document.getElementById("firstID").innerText = response1.data.id;
+            //   document.getElementById("firstTitle").innerText =
+            //     response1.data.title;
+            //   document.getElementById("firstUserID").innerText =
+            //     response1.data.userId;
+            // for(i = 0; i < response1.length; i++){
+            //     console.log(i);
+            // }
+
+            //   여러 게시물 불러 올 때
+            // let myTarget = document.getElementsByClassName("dataRow")[0];
+            //         const response1 = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            //         response1.data.array.forEach(element => {
+            //             myTarget.innerHTML += `<tr><td>${element.id}</td><td>${element.title}</td><td>${element.userId}</td></tr>`
+            // 도 가능!
+
+            for (i = 0; i < response1.data.length; i++) {
+              document.getElementById("dataRow").innerHTML +=
+                //   "<tr> <td>" +
+                //   response1.data[i].id +
+                //   "</td> <td>" +
+                //   response1.data[i].title +
+                //   "</td> <td>" +
+                //   response1.data[i].userId +
+                //   "</td></tr>";
+
+                `<tr> <td>
+                ${response1.data[i].id}
+                </td> <td>
+                  ${response1.data[i].title}
+                </td> <td>
+                  ${response1.data[i].body}
+                </td> <td>
+                  ${response1.data[i].authorName}
+                </td></tr>`;
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+    </script>
+</head>
+
+<body>
+<div id="header"></div>
+<div class="container">
+    <div class="page-header"><h1>게시글 목록</h1></div>
+
+    <div class="float-end">
+        <a href="./7.css_bootstrap_postregister.html">
+            <button class="btn btn-primary">글쓰기</button>
+        </a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Author Name</th>
+        </tr>
+        </thead>
+        <tbody id="dataRow"></tbody>
+    </table>
+</div>
+
+<script>
+    callbackImp();
+</script>
+<script>
+    document.getElementById("header").innerHTML =
+      '<object type="text/html" data="header.html"></object>';
+</script>
+</body>
+</html>
